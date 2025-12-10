@@ -14,6 +14,7 @@ import { Post } from '../post';
 export class ViewComponent {
   id!: number;
   post!: Post;
+  comments: any[] = [];
 
   /*------------------------------------------
   --------------------------------------------
@@ -36,6 +37,10 @@ export class ViewComponent {
 
     this.postService.find(this.id).subscribe((data: Post) => {
       this.post = data;
+    });
+
+    this.postService.getComments(this.id).subscribe((data: any[]) => {
+      this.comments = data;
     });
   }
 }

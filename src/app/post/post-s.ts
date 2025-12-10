@@ -71,6 +71,18 @@ export class PostService {
    *
    * @return response()
    */
+  getComments(id: number): Observable<any> {
+    return this.httpClient
+      .get(this.apiURL + '/posts/' + id + '/comments')
+
+      .pipe(catchError(this.errorHandler));
+  }
+
+  /**
+   * Write code on Method
+   *
+   * @return response()
+   */
   update(id: number, post: Post): Observable<any> {
     return this.httpClient
       .put(this.apiURL + '/posts/' + id, JSON.stringify(post), this.httpOptions)
