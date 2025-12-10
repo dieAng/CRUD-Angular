@@ -1,0 +1,25 @@
+<div class="container text-center mt-5">
+  <h1 class="mb-5">Welcome to CRUD App</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-5 mb-4">
+      <div class="card h-100 shadow-sm hover-card" [routerLink]="['/post/index']">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center p-5">
+          <h2 class="card-title text-primary">Posts</h2>
+          <p class="card-text text-muted">Manage your posts here</p>
+          <button class="btn btn-primary mt-3">Go to Posts</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 mb-4">
+      <div class="card h-100 shadow-sm hover-card" [routerLink]="['/albums/index']">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center p-5">
+          <h2 class="card-title text-success">Albums</h2>
+          <p class="card-text text-muted">Manage your albums here</p>
+          <button class="btn btn-success mt-3">Go to Albums</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

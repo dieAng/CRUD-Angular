@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Multi View</h1>
+
+  <a href="#" [routerLink]="['/albums/index']" class="btn btn-primary">Back</a>
+
+  <div>
+    <strong>ID:</strong>
+    <p>{{ album?.id }}</p>
+  </div>
+
+  <div>
+    <strong>Title:</strong>
+    <p>{{ album?.title }}</p>
+  </div>
+
+  <div>
+    <strong>User ID:</strong>
+    <p>{{ album?.userId }}</p>
+  </div>
+
+  <hr />
+  <h3>Random Images Carousel</h3>
+
+  <div class="carousel-container">
+    <div class="carousel-track">
+      @for (img of images; track img) {
+      <div class="carousel-slide">
+        <img [ngSrc]="img" width="300" height="200" alt="Random Image" />
+      </div>
+      }
+    </div>
+  </div>
+  <p class="text-muted">Scroll horizontally to see more images</p>
+</div>

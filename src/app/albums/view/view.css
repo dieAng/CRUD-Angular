@@ -1,0 +1,21 @@
+.carousel-container {
+  width: 100%;
+  margin-top: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+
+.carousel-track {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.carousel-slide {
+  display: inline-block;
+}
+
+.carousel-slide img {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
