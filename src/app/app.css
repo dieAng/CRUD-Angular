@@ -1,0 +1,19 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.sidenav-container {
+  height: calc(100vh - 64px); /* Subtract toolbar height */
+}
+
+.content-wrapper {
+  padding: 20px;
+}
+
+.active-link {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+mat-sidenav {
+  width: 250px;
+}

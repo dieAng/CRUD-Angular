@@ -26,4 +26,41 @@ export const routes: Routes = [
   { path: 'albums/create', component: AlbumsCreateComponent },
   { path: 'albums/:id/view', component: AlbumsViewComponent },
   { path: 'albums/:id/edit', component: AlbumsEditComponent },
+
+  { path: 'users', redirectTo: 'users/index', pathMatch: 'full' },
+  {
+    path: 'users/index',
+    loadComponent: () => import('./users/index/index.component').then((m) => m.UserIndexComponent),
+  },
+  {
+    path: 'users/create',
+    loadComponent: () =>
+      import('./users/create/create.component').then((m) => m.UserCreateComponent),
+  },
+  {
+    path: 'users/:id/view',
+    loadComponent: () => import('./users/view/view.component').then((m) => m.UserViewComponent),
+  },
+  {
+    path: 'users/:id/edit',
+    loadComponent: () => import('./users/edit/edit.component').then((m) => m.UserEditComponent),
+  },
+  { path: 'todos', redirectTo: 'todos/index', pathMatch: 'full' },
+  {
+    path: 'todos/index',
+    loadComponent: () => import('./todos/index/index.component').then((m) => m.TodoIndexComponent),
+  },
+  {
+    path: 'todos/create',
+    loadComponent: () =>
+      import('./todos/create/create.component').then((m) => m.TodoCreateComponent),
+  },
+  {
+    path: 'todos/:id/view',
+    loadComponent: () => import('./todos/view/view.component').then((m) => m.TodoViewComponent),
+  },
+  {
+    path: 'todos/:id/edit',
+    loadComponent: () => import('./todos/edit/edit.component').then((m) => m.TodoEditComponent),
+  },
 ];
