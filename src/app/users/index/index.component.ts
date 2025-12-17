@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
@@ -104,6 +104,11 @@ export class UserIndexComponent implements OnInit {
   users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'username', 'email', 'actions'];
 
+  page = 1;
+  limit = 5;
+  isLoading = false;
+  allUsersLoaded = false;
+
   private userService = inject(UserService);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
@@ -113,10 +118,32 @@ export class UserIndexComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userService.getAll().subscribe({
-      next: (data) => this.users.set(data),
-      error: (e) => this.snackBar.open('Error loading users', 'Close', { duration: 3000 }),
+    if (this.isLoading || this.allUsersLoaded) return;
+
+    this.isLoading = true;
+    this.userService.getAll(this.page, this.limit).subscribe({
+      next: (data) => {
+        if (data.length < this.limit) {
+          this.allUsersLoaded = true;
+        }
+        this.users.update((current) => [...current, ...data]);
+        this.isLoading = false;
+      },
+      error: (e) => {
+        this.snackBar.open('Error loading users', 'Close', { duration: 3000 });
+        this.isLoading = false;
+      },
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+      if (!this.isLoading && !this.allUsersLoaded) {
+        this.page++;
+        this.loadUsers();
+      }
+    }
   }
 
   deleteUser(id: number): void {

@@ -35,9 +35,9 @@ export class PostService {
    *
    * @return response()
    */
-  getAll(): Observable<any> {
+  getAll(page: number = 1, limit: number = 10): Observable<any> {
     return this.httpClient
-      .get(this.apiURL + '/posts/')
+      .get(this.apiURL + '/posts?_page=' + page + '&_limit=' + limit)
 
       .pipe(catchError(this.errorHandler));
   }

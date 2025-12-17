@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -16,6 +17,7 @@ import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog.co
     CommonModule,
     RouterModule,
     MatTableModule,
+    MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
@@ -23,16 +25,22 @@ import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog.co
   templateUrl: './index.html',
   styleUrl: './index.css',
 })
-export class AlbumsIndexComponent implements OnInit {
-  albums: Album[] = [];
+export class AlbumsIndexComponent implements OnInit, AfterViewInit {
+  dataSource = new MatTableDataSource<Album>([]);
   displayedColumns: string[] = ['id', 'title', 'userId', 'action'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(public albumService: AlbumService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.albumService.getAll().subscribe((data: Album[]) => {
-      this.albums = data;
+      this.dataSource.data = data;
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   deleteAlbum(id: number) {
@@ -43,7 +51,7 @@ export class AlbumsIndexComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.albumService.delete(id).subscribe((res) => {
-          this.albums = this.albums.filter((item) => item.id !== id);
+          this.dataSource.data = this.dataSource.data.filter((item) => item.id !== id);
         });
       }
     });

@@ -11,8 +11,8 @@ export class UserService {
   private apiUrl = 'https://jsonplaceholder.typicode.com/users';
   private http = inject(HttpClient);
 
-  getAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+  getAll(page: number = 1, limit: number = 10): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}?_page=${page}&_limit=${limit}`);
   }
 
   get(id: number): Observable<User> {

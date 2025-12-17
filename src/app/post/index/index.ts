@@ -27,12 +27,31 @@ export class IndexComponent {
   posts: Post[] = [];
   displayedColumns: string[] = ['id', 'title', 'body', 'action'];
 
+  page: number = 1;
+  limit: number = 10;
+
   constructor(public postService: PostService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.postService.getAll().subscribe((data: Post[]) => {
+    this.loadPosts();
+  }
+
+  loadPosts() {
+    this.postService.getAll(this.page, this.limit).subscribe((data: Post[]) => {
       this.posts = data;
     });
+  }
+
+  nextPage() {
+    this.page++;
+    this.loadPosts();
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.page--;
+      this.loadPosts();
+    }
   }
 
   deletePost(id: number) {
